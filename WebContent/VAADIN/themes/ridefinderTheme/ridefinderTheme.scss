@@ -1,0 +1,102 @@
+// Global variable overrides. Must be declared before importing Valo.
+
+// Defines the plaintext font size, weight and family. Font size affects general component sizing.
+//$v-font-size: 16px;
+//$v-font-weight: 300;
+//$v-font-family: "Open Sans", sans-serif;
+
+// Defines the border used by all components.
+//$v-border: 1px solid (v-shade 0.7);
+//$v-border-radius: 4px;
+
+// Affects the color of some component elements, e.g Button, Panel title, etc
+//$v-background-color: hsl(210, 0%, 98%);
+// Affects the color of content areas, e.g  Panel and Window content, TextField input etc
+//$v-app-background-color: $v-background-color;
+
+// Affects the visual appearance of all components
+//$v-gradient: v-linear 8%;
+//$v-bevel-depth: 30%;
+//$v-shadow-opacity: 5%;
+
+// Defines colors for indicating status (focus, success, failure)
+//$v-focus-color: valo-focus-color(); // Calculates a suitable color automatically
+//$v-friendly-color: #2c9720;
+//$v-error-indicator-color: #ed473b;
+
+// For more information, see: https://vaadin.com/book/-/page/themes.valo.html
+// Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples
+
+@import "../valo/valo.scss";
+
+@mixin ridefinderTheme {
+  @include valo;
+
+  // Insert your own theme rules here
+  
+  .searchComponent {
+  	margin-left:5px;
+  	margin-right:5px;
+  }
+  
+  .v-caption-searchComponent {
+  	margin-left:5px;
+  }
+  
+  .v-verticallayout-layoutHeader {
+  	background: url(images/head_background.jpg);
+    background-repeat: no-repeat;
+    background-position: center top; 
+    background-color: #00B4EF;
+    padding: 10px;
+  }
+  
+  .headerBottomSpace {
+  	height: 50px;
+  }
+  
+  .headerBottomSpace {
+  	height: 100px;
+  }
+  
+  .panelBackground {
+  	text-align: center;
+  }
+  
+  .v-horizontallayout-layoutSearchResult {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .v-horizontallayout-layoutSearchResult:hover {
+    background-color: #3d91e5;
+  }
+  
+  .v-horizontallayout-layoutSearchResult .v-label {
+  //  margin: 20px 10px 0px 100px;
+	margin-top: 10px;
+    font-size: 20pt;
+    font-weight: bold;
+  }
+  
+  .v-horizontallayout-layoutSearchResult .v-image {
+  	margin-left: 10px;
+  }
+  
+  .errorField {
+  	border: 1px solid #ed473b;
+  }
+  
+  .v-errorindicator::before {
+    content: "";
+  }
+  
+  .labelNoResult {
+  	margin-top: 10px;
+  	text-align: center;
+  }
+  
+  // .layoutBackground {
+  // 	background-color: #00B4EF;
+  // }
+}
