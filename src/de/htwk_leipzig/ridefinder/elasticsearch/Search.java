@@ -6,32 +6,52 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.SearchHit;
 
+/**
+ * ermoeglicht die Suche
+ *
+ * @author Christian
+ *
+ */
 public class Search {
 
-	public static SearchResponse search(Client client, String from, String to, String date)
+	/**
+	 * Sucht nach Mitfahrgelegenheiten
+	 *
+	 * @param client
+	 * @param from
+	 * @param to
+	 * @param date
+	 * @return Suchergebnis der Mitfahrgelegenheiten
+	 * @throws UnknownHostException
+	 */
+	public static SearchResponse search(final Client client, final String from, final String to, final String date)
 			throws UnknownHostException {
-		BoolQueryBuilder searchQuery = QueryBuilders.boolQuery().must(QueryBuilders.termQuery("from", from.toLowerCase()))
+		final BoolQueryBuilder searchQuery = QueryBuilders.boolQuery()
+				.must(QueryBuilders.termQuery("from", from.toLowerCase()))
 				.must(QueryBuilders.termQuery("to", to.toLowerCase())).must(QueryBuilders.termQuery("date", date));
 
-		SearchResponse searchResponse = client.prepareSearch("rides").setQuery(searchQuery).execute()
-				.actionGet();
+		final SearchResponse searchResponse = client.prepareSearch("rides").setQuery(searchQuery).execute().actionGet();
 
 		return searchResponse;
-		
-//		System.out.println(searchResponse);
-//
-//		for (SearchHit hit : searchResponse.getHits()) {
-//			System.out.println(hit.getSourceAsString());
-//		}
 	}
 
-	public static SearchResponse searchWithOutClient(String from, String to, String date) throws UnknownHostException {
-		ElasticSearchClient client = new ElasticSearchClient();
+	/**
+	 * erstellt einen Client, verbindet diesen und sucht dann, anschliessend
+	 * wird der Client wieder geschlossen
+	 *
+	 * @param from
+	 * @param to
+	 * @param date
+	 * @return Suchergebnis Suchergebnis der Mitfahrgelegenheiten
+	 * @throws UnknownHostException
+	 */
+	public static SearchResponse searchWithOutClient(final String from, final String to, final String date)
+			throws UnknownHostException {
+		final ElasticSearchClient client = new ElasticSearchClient();
 		client.connect();
 
-		SearchResponse searchResponse = Search.search(client.getClient(), from, to, date);
+		final SearchResponse searchResponse = Search.search(client.getClient(), from, to, date);
 
 		client.close();
 

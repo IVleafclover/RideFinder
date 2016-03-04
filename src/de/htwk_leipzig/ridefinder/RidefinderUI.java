@@ -37,28 +37,85 @@ import com.vaadin.ui.VerticalLayout;
 import de.htwk_leipzig.ridefinder.elasticsearch.Search;
 import de.htwk_leipzig.ridefinder.model.RideLoopHelper;
 
+/**
+ * die Anwendungsoberflaeche
+ *
+ * @author Christian
+ *
+ */
 @SuppressWarnings("serial")
 @Theme("ridefinderTheme")
 public class RidefinderUI extends UI {
 
+	/**
+	 * benoetigt von Vaadin fuer Applicaionseinstieg
+	 */
 	@WebServlet(value = "/*", asyncSupported = true)
 	@VaadinServletConfiguration(productionMode = false, ui = RidefinderUI.class)
 	public static class Servlet extends VaadinServlet {
 	}
 
-	// final Variablen
+	// =======================
+	// === final Variablen ===
+	// =======================
+
+	/**
+	 * die unterstuetzten Orte
+	 */
 	private final String[] destinations = { "Leipzig", "Magdeburg", "Dresden", "Berlin" };
+
+	/**
+	 * Pfad zu den Ressourcen
+	 */
 	private final String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+
+	/**
+	 * Pfad zu den Bildern
+	 */
 	private final String imagePath = basepath + "/VAADIN/themes/ridefinderTheme/images/";
+
+	/**
+	 * Datumsformat fuer das DateInputField
+	 */
 	private final java.text.DateFormat dateFormat = new java.text.SimpleDateFormat("dd.MM.yyyy");
 
-	// Layout Objekte
+	// ======================
+	// === Layout Objekte ===
+	// ======================
+
+	/**
+	 * der Hintergrund
+	 */
 	private final Panel layoutBackground = new Panel();
+
+	/**
+	 * Wrapper wird benoetigt, damit der Inhalt zentriert wird
+	 */
 	private final HorizontalLayout layoutWrapper = new HorizontalLayout();
+
+	/**
+	 * das Layout, welches die Inhaltskomponenten besitzt
+	 */
 	private final VerticalLayout layoutMain = new VerticalLayout();
+
+	/**
+	 * das Layout, welches die Suchergebnisse enthaelt
+	 */
 	private final VerticalLayout layoutSearchResults = new VerticalLayout();
+
+	/**
+	 * Die Auswahlbox fuer "von"
+	 */
 	private ComboBox comboboxFrom;
+
+	/**
+	 * Die Auswahlbox fuer "zu"
+	 */
 	private ComboBox comboboxTo;
+
+	/**
+	 * Die Auswahlbox fuer "Datum"
+	 */
 	private DateField datefieldDate;
 
 	@Override
@@ -68,6 +125,9 @@ public class RidefinderUI extends UI {
 		initEmptySearchResults();
 	}
 
+	/**
+	 * initialisiert den Wrapper und fuegt das Main-Layout ihm hinzu
+	 */
 	private void initWrapper() {
 		layoutBackground.setSizeFull();
 		layoutBackground.setStyleName("panelBackground");
@@ -78,6 +138,9 @@ public class RidefinderUI extends UI {
 		layoutWrapper.setComponentAlignment(layoutMain, Alignment.TOP_LEFT);
 	}
 
+	/**
+	 * initialisierte den Kopfbereich (Hintergrund zu den Sucheingaben)
+	 */
 	private void initHeader() {
 		final VerticalLayout layoutHeader = new VerticalLayout();
 		layoutHeader.setStyleName("layoutHeader");
@@ -99,6 +162,11 @@ public class RidefinderUI extends UI {
 		layoutMain.addComponent(layoutHeader);
 	}
 
+	/**
+	 * initialisiert die Sucheingaben
+	 *
+	 * @param layoutHeader
+	 */
 	private void initSearchInput(final VerticalLayout layoutHeader) {
 		final HorizontalLayout layoutsearchInput = new HorizontalLayout();
 
@@ -143,6 +211,11 @@ public class RidefinderUI extends UI {
 
 	}
 
+	/**
+	 * prueft ob alle Suchparameter richtig ausgefuellt wurden
+	 *
+	 * @return alles richtig ausgefuellt
+	 */
 	private boolean validateInputs() {
 		boolean isValid = true;
 		if (comboboxFrom.getValue() == null) {
@@ -163,16 +236,26 @@ public class RidefinderUI extends UI {
 		return isValid;
 	}
 
+	/**
+	 * wechselt Inhalt der Felder "von" und "zu"
+	 */
 	private void changeFromAndTo() {
 		final Object tempValue = comboboxFrom.getValue();
 		comboboxFrom.setValue(comboboxTo.getValue());
 		comboboxTo.setValue(tempValue);
 	}
 
+	/**
+	 * initialisert zu beginn der Anwendung ein leeres Suchergebnis, um
+	 * Formatfehler zu beheben
+	 */
 	private void initEmptySearchResults() {
 		layoutMain.addComponent(layoutSearchResults);
 	}
 
+	/**
+	 * sucht und stellt Suchergebnisse dar
+	 */
 	private void addSearchResults() {
 		try {
 			SearchResponse searchResponse;
@@ -213,11 +296,16 @@ public class RidefinderUI extends UI {
 				layoutSearchResults.addComponent(labelNoResult);
 			}
 		} catch (final UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 
+	/**
+	 * fuegt Suchergebnis Bild des Providers hinzu
+	 *
+	 * @param hit
+	 * @param layoutSearchResult
+	 */
 	private void addProviderImageForSearchResult(final RideLoopHelper hit, final HorizontalLayout layoutSearchResult) {
 		final String logoPath = loadHitLogoPath(hit);
 		final FileResource resourceLogo = new FileResource(new File(logoPath));
@@ -225,6 +313,13 @@ public class RidefinderUI extends UI {
 		layoutSearchResult.addComponent(imageLogo);
 	}
 
+	/**
+	 * fuegt Suchergebnis Bild und Label hinzu
+	 *
+	 * @param hitFieldContent
+	 * @param hitLogoPath
+	 * @param layoutSearchResult
+	 */
 	private void addImageAndLabelForSearchResultField(final String hitFieldContent, final String hitLogoPath,
 			final HorizontalLayout layoutSearchResult) {
 		final HorizontalLayout layoutLablAndImage = new HorizontalLayout();
@@ -238,6 +333,12 @@ public class RidefinderUI extends UI {
 		layoutSearchResult.setComponentAlignment(layoutLablAndImage, Alignment.MIDDLE_RIGHT);
 	}
 
+	/**
+	 * gibt je nach Provider den Pfad zu dem zugehoerigen Bild zurueck
+	 *
+	 * @param hit
+	 * @return Bildpfad
+	 */
 	private String loadHitLogoPath(final RideLoopHelper hit) {
 		String logoPath = imagePath;
 		switch (hit.getProvider()) {
@@ -255,6 +356,9 @@ public class RidefinderUI extends UI {
 		return logoPath;
 	}
 
+	/**
+	 * entfernt Suchergebnisse
+	 */
 	private void removeSearchResults() {
 		layoutSearchResults.removeAllComponents();
 	}
