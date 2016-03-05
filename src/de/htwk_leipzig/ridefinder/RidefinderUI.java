@@ -350,6 +350,10 @@ public class RidefinderUI extends UI {
 			logoPath += "bessermitfahren_logo.png";
 			break;
 
+		case "blablacar":
+			logoPath += "blablacar_logo.png";
+			break;
+
 		default:
 			break;
 		}

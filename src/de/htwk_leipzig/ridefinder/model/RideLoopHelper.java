@@ -162,10 +162,10 @@ public class RideLoopHelper implements Comparable<RideLoopHelper> {
 	 * @return konvertierter Zeit-String
 	 */
 	private String makeTimeComparable(final String timeToConvert) {
-		if (time.length() < 5) {
-			return "0" + time;
+		if (timeToConvert.length() < 5) {
+			return "0" + timeToConvert;
 		}
-		return time;
+		return timeToConvert;
 	}
 
 }
