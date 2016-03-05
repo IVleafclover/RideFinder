@@ -12,6 +12,11 @@ import java.util.Map;
 public class RideLoopHelper implements Comparable<RideLoopHelper> {
 
 	/**
+	 * Bezeichner fuer keinen angegebenen Preis
+	 */
+	private final static String NULLPRICE = "null";
+
+	/**
 	 * externer Link zum Suchergebnis des Providers
 	 */
 	private String id;
@@ -63,7 +68,10 @@ public class RideLoopHelper implements Comparable<RideLoopHelper> {
 	 * @return umgeandelter Preis
 	 */
 	private String convertPrice(final String priceToFormat) {
-		return PRICEFORMAT.format(Float.parseFloat(price));
+		if (priceToFormat.equals("null")) {
+			return "-";
+		}
+		return PRICEFORMAT.format(Float.parseFloat(priceToFormat));
 	}
 
 	/**
