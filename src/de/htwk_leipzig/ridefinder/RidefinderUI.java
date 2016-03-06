@@ -10,7 +10,6 @@ import java.util.List;
 
 import javax.servlet.annotation.WebServlet;
 
-import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.search.SearchHit;
 
 import com.vaadin.annotations.Theme;
@@ -258,14 +257,13 @@ public class RidefinderUI extends UI {
 	 */
 	private void addSearchResults() {
 		try {
-			SearchResponse searchResponse;
-			searchResponse = Search.searchWithOutClient((String) comboboxFrom.getValue(),
+			final List<SearchHit> hits = Search.searchWithOutClient((String) comboboxFrom.getValue(),
 					(String) comboboxTo.getValue(), dateFormat.format(datefieldDate.getValue()));
 
-			if (searchResponse.getHits().getTotalHits() > 0) {
+			if (hits.size() > 0) {
 
 				final List<RideLoopHelper> searchResults = new ArrayList<>();
-				for (final SearchHit hit : searchResponse.getHits()) {
+				for (final SearchHit hit : hits) {
 					searchResults.add(new RideLoopHelper(hit.getId(), hit.getSource()));
 				}
 
