@@ -264,13 +264,13 @@ public class RidefinderUI extends UI {
 
 				final List<RideLoopHelper> searchResults = new ArrayList<>();
 				for (final SearchHit hit : hits) {
-					searchResults.add(new RideLoopHelper(hit.getId(), hit.getSource()));
+					searchResults.add(new RideLoopHelper(hit.getSource()));
 				}
 
 				Collections.sort(searchResults);
 
 				for (final RideLoopHelper hit : searchResults) {
-					final BrowserWindowOpener linkToRide = new BrowserWindowOpener(new ExternalResource(hit.getId()));
+					final BrowserWindowOpener linkToRide = new BrowserWindowOpener(new ExternalResource(hit.getLink()));
 
 					final HorizontalLayout layoutSearchResult = new HorizontalLayout();
 					layoutSearchResult.setWidth("100%");

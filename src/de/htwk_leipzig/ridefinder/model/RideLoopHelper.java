@@ -19,7 +19,7 @@ public class RideLoopHelper implements Comparable<RideLoopHelper> {
 	/**
 	 * externer Link zum Suchergebnis des Providers
 	 */
-	private String id;
+	private String link;
 
 	/**
 	 * Provider der Mitfahrgelegenheit
@@ -49,12 +49,11 @@ public class RideLoopHelper implements Comparable<RideLoopHelper> {
 	/**
 	 * Konstruktor
 	 *
-	 * @param id
 	 * @param fieldsMap
 	 */
-	public RideLoopHelper(final String id, final Map<String, Object> fieldsMap) {
+	public RideLoopHelper(final Map<String, Object> fieldsMap) {
 		super();
-		setId(id);
+		setLink((String) fieldsMap.get("link"));
 		setProvider((String) fieldsMap.get("provider"));
 		setTime((String) fieldsMap.get("time"));
 		setSeat((String) fieldsMap.get("seat"));
@@ -77,15 +76,15 @@ public class RideLoopHelper implements Comparable<RideLoopHelper> {
 	/**
 	 * @return der Link
 	 */
-	public String getId() {
-		return id;
+	public String getLink() {
+		return link;
 	}
 
 	/**
-	 * @param id
+	 * @param link
 	 */
-	public void setId(final String id) {
-		this.id = id;
+	public void setLink(final String link) {
+		this.link = link;
 	}
 
 	/**
