@@ -61,7 +61,9 @@ public class RidefinderUI extends UI {
 	/**
 	 * die unterstuetzten Orte
 	 */
-	private final String[] destinations = { "Leipzig", "Magdeburg", "Dresden", "Berlin" };
+	private final String[] destinations = { "Berlin", "Bielefeld", "Bochum", "Bonn", "Bremen", "Dortmund", "Dresden",
+			"Duisburg", "Düsseldorf", "Essen", "Frankfurt am Main", "Hamburg", "Hannover", "Köln", "Leipzig", "München",
+			"Münster", "Nürnberg", "Stuttgart", "Wuppertal" };
 
 	/**
 	 * Pfad zu den Ressourcen
