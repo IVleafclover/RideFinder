@@ -1,0 +1,58 @@
+-- Java installieren --
+-- Packages updaten
+
+sudo apt-get update
+
+-- Java jdk installieren
+
+sudo apt-get install openjdk-8-jre
+
+-- Zertifikate updaten
+
+sudo update-ca-certificates -f
+
+-- elasticsearch installieren --
+-- elasticsearch downloaden
+
+wget https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-2.0.0.deb
+
+-- elasticsearch installieren
+
+sudo dpkg -i elasticsearch-2.0.0.deb
+
+-- folgenden Befehl ausführen
+
+sudo update-rc.d elasticsearch defaults
+
+-- starten
+
+sudo service elasticsearch start
+
+-- Backend installieren --
+-- Backend in Home-Verzeichnis platzieren
+
+RideFinder_Backend.jar im Home-Verzeichnis platzieren
+
+-- jar ausführen
+-- wirft das erste mal eine Exception, weil Index leer ist
+
+java -jar RideFinder_Backend.jar
+
+-- eventuell an dieser Stelle ein neues Terminal öffnen
+
+-- Frontend installieren--
+-- tomcat installieren
+
+sudo apt-get install tomcat8
+
+-- frontend in Home-Verzeichnis platzieren
+
+RideFinder.war im Home-Verzeichnis platzieren
+
+-- frontend in tomcat webapps platzieren
+
+sudo cp RideFinder.war /var/lib/tomcat8/webapps
+
+-- restart tomcat
+
+sudo service tomcat8 restart
